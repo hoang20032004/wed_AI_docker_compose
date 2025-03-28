@@ -1,5 +1,4 @@
-# AI Paper Q&A
-
+MÔ HÌNH AI SỬ DỤNG GEMINI API 
 Ứng dụng web cho phép người dùng tải lên các bài báo khoa học dạng PDF và đặt câu hỏi về nội dung của chúng. Ứng dụng sử dụng LlamaIndex và Google Gemini để phân tích và trả lời câu hỏi.
 
 ## Tính năng
