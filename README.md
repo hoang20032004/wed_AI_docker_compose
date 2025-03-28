@@ -12,5 +12,15 @@
 
 ## Cài đặt
 
-1. Cài đặt các thư viện cần thiết:
+1. docker 
+2. Máy yêu cầu có WSL 2
+
+## hướng dẫn sử dụng 
+- win 
+    Git clone https://github.com/hoang20032004/wed_AI_docker_compose.git
+    Khởi động Docker 
+    CD tới ở đĩa 
+    sử dụng câu lệnh docker compose up -d
+    Truy cập địa chỉ http://localhost:8501/
+Hệ điều hành khác hoàng chưa xài bao h chịu hen :)) 
 
