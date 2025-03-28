@@ -13,10 +13,10 @@ from llama_index.core.selectors import LLMSingleSelector
 from llama_index.llms.gemini import Gemini
 from llama_index.embeddings.gemini import GeminiEmbedding
 
-# Cấu hình ứng dụng
+# Application configuration
 CHUNK_SIZE = 1024
 
-# Thiết lập trang Streamlit
+# Setup Streamlit page
 st.set_page_config(
     page_title="TeenAI LP GPT",
     page_icon="🤖",
@@ -24,7 +24,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# CSS tùy chỉnh với thiết kế hiện đại hơn
+# CSS customization with modern design
 st.markdown("""
 <style>
     /* Modern Color Scheme and Fonts */
@@ -183,7 +183,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# Hàm khởi tạo session state
+# Initialize session state
 def init_session_state():
     if 'api_key' not in st.session_state:
         st.session_state.api_key = ""
@@ -196,16 +196,16 @@ def init_session_state():
     if 'temp_dir' not in st.session_state:
         st.session_state.temp_dir = None
 
-# Hàm tải tài liệu
+# Load documents function
 def load_documents(uploaded_files) -> List[Document]:
-    """Tải tài liệu từ các file được tải lên."""
+    """Load documents from uploaded files."""
     try:
-        # Tạo thư mục tạm thời để lưu file
+        # Create temporary directory to store files
         if st.session_state.temp_dir is None:
             st.session_state.temp_dir = tempfile.TemporaryDirectory()
         temp_dir = st.session_state.temp_dir.name
         
-        # Lưu các file tải lên vào thư mục tạm thời
+        # Save uploaded files to temporary directory
         file_paths = []
         for uploaded_file in uploaded_files:
             file_path = os.path.join(temp_dir, uploaded_file.name)
@@ -213,43 +213,43 @@ def load_documents(uploaded_files) -> List[Document]:
                 f.write(uploaded_file.getbuffer())
             file_paths.append(file_path)
         
-        # Tải tài liệu từ các file
+        # Load documents from files
         documents = SimpleDirectoryReader(input_files=file_paths).load_data()
         return documents
     except Exception as e:
-        st.error(f"Lỗi khi tải tài liệu: {e}")
+        st.error(f"Error loading documents: {e}")
         return []
 
-# Hàm khởi tạo mô hình
+# Initialize models
 def initialize_models(api_key: str) -> bool:
-    """Khởi tạo mô hình LLM và embedding."""
+    """Initialize LLM and embedding models."""
     try:
         Settings.llm = Gemini(api_key=api_key, model="models/gemini-1.5-pro")
         Settings.embed_model = GeminiEmbedding(api_key=api_key, model="models/embedding-001")
         return True
     except Exception as e:
-        st.error(f"Lỗi khi khởi tạo mô hình: {e}")
+        st.error(f"Error initializing models: {e}")
         return False
 
-# Hàm tạo query engine
+# Create query engine
 def create_query_engine(documents: List[Document]) -> Optional[RouterQueryEngine]:
-    """Tạo và cấu hình query engine."""
+    """Create and configure query engine."""
     try:
-        with st.spinner("Đang xử lý tài liệu..."):
+        with st.spinner("Processing documents..."):
             progress_bar = st.progress(0)
             
-            # Phân tích tài liệu thành nodes
+            # Parse documents into nodes
             splitter = SentenceSplitter(chunk_size=CHUNK_SIZE)
             nodes = splitter.get_nodes_from_documents(documents)
             progress_bar.progress(0.3)
             
-            # Tạo indices
+            # Create indices
             summary_index = SummaryIndex(nodes)
             progress_bar.progress(0.5)
             vector_index = VectorStoreIndex(nodes)
             progress_bar.progress(0.7)
             
-            # Tạo query engines
+            # Create query engines
             summary_query_engine = summary_index.as_query_engine(
                 response_mode="tree_summarize",
                 use_async=True
@@ -257,17 +257,17 @@ def create_query_engine(documents: List[Document]) -> Optional[RouterQueryEngine
             vector_query_engine = vector_index.as_query_engine()
             progress_bar.progress(0.9)
             
-            # Tạo tools
+            # Create tools
             summary_tool = QueryEngineTool.from_defaults(
                 query_engine=summary_query_engine,
-                description="Hữu ích cho các câu hỏi tóm tắt liên quan đến bất kỳ chủ đề nào trong bài báo deep learning."
+                description="Useful for summary questions related to any topic in deep learning papers."
             )
             vector_tool = QueryEngineTool.from_defaults(
                 query_engine=vector_query_engine,
-                description="Hữu ích để truy xuất thông tin cụ thể từ bài báo deep learning."
+                description="Useful for retrieving specific information from deep learning papers."
             )
             
-            # Tạo router query engine
+            # Create router query engine
             query_engine = RouterQueryEngine(
                 selector=LLMSingleSelector.from_defaults(),
                 query_engine_tools=[summary_tool, vector_tool],
@@ -277,78 +277,78 @@ def create_query_engine(documents: List[Document]) -> Optional[RouterQueryEngine
             progress_bar.progress(1.0)
             return query_engine
     except Exception as e:
-        st.error(f"Lỗi khi tạo query engine: {e}")
+        st.error(f"Error creating query engine: {e}")
         return None
 
-# Hàm xử lý câu hỏi
+# Process query
 def process_query(query: str):
-    """Xử lý câu hỏi và hiển thị kết quả."""
+    """Process query and display results."""
     if not query.strip():
-        st.warning("Vui lòng nhập câu hỏi.")
+        st.warning("Please enter a question.")
         return
     
     if st.session_state.query_engine is None:
-        st.warning("Vui lòng tải tài liệu và khởi tạo mô hình trước.")
+        st.warning("Please load documents and initialize models first.")
         return
     
     try:
-        with st.spinner("Đang xử lý câu hỏi..."):
+        with st.spinner("Processing question..."):
             response = st.session_state.query_engine.query(query)
-            # Thêm vào lịch sử chat
+            # Add to chat history
             st.session_state.chat_history.append({"question": query, "answer": str(response)})
     except Exception as e:
-        st.error(f"Lỗi khi xử lý câu hỏi: {e}")
+        st.error(f"Error processing query: {e}")
 
-# Khởi tạo session state
+# Initialize session state
 init_session_state()
 
-# Sidebar cho cấu hình
+# Sidebar for configuration
 with st.sidebar:
-    st.markdown("<div class='sub-header'>Cấu hình</div>", unsafe_allow_html=True)
+    st.markdown("<div class='sub-header'>Configuration</div>", unsafe_allow_html=True)
     
-    # Input API key
-    api_key = st.text_input("khóa API Gemi", value=st.session_state.api_key, type="password")
+    # API key input
+    api_key = st.text_input("Gemini API Key", value=st.session_state.api_key, type="password")
     if api_key != st.session_state.api_key:
         st.session_state.api_key = api_key
     
-    # Upload tài liệu
-    st.markdown("### Tải lên tài liệu")
-    uploaded_files = st.file_uploader("Chọn file PDF", type=["pdf"], accept_multiple_files=True)
+    # Upload documents
+    st.markdown("### Upload Documents")
+    uploaded_files = st.file_uploader("Choose PDF files", type=["pdf"], accept_multiple_files=True)
     
     if uploaded_files:
-        if st.button("Xử lý tài liệu"):
+        if st.button("Process Documents"):
             documents = load_documents(uploaded_files)
             if documents:
                 st.session_state.documents = documents
-                st.success(f"Đã tải {len(documents)} tài liệu thành công!")
+                st.success(f"Successfully loaded {len(documents)} documents!")
                 
-                # Khởi tạo mô hình và query engine
+                # Initialize model and query engine
                 if initialize_models(st.session_state.api_key):
                     st.session_state.query_engine = create_query_engine(documents)
                     if st.session_state.query_engine:
-                        st.success("Đã khởi tạo mô hình và query engine thành công!")
+                        st.success("Successfully initialized models and query engine!")
     
-    # Xóa lịch sử chat
-    if st.button("Xóa lịch sử chat"):
+    # Clear chat history
+    if st.button("Clear Chat History"):
         st.session_state.chat_history = []
-        st.success("Đã xóa lịch sử chat!")
+        st.success("Chat history cleared!")
 
-# Phần chính của ứng dụng
+# Main application section
 st.markdown("<div class='main-header'>Longphước GPT</div>", unsafe_allow_html=True)
 st.markdown("<div class='sub-header'>Smart Assistant for Scientific Research</div>", unsafe_allow_html=True)
 
-# Hiển thị trạng thái
+# Display status
 if st.session_state.documents is not None:
-    st.info(f"Đã tải {len(st.session_state.documents)} tài liệu. Sẵn sàng trả lời câu hỏi!")
+    st.info(f"Loaded {len(st.session_state.documents)} documents. Ready to answer questions!")
 else:
-    st.info("Vui lòng tải lên tài liệu PDF từ sidebar để bắt đầu.")
+    st.info("Please upload PDF documents from the sidebar to begin.")
 
-# Phần chat
-st.markdown("### Hỏi đáp")
+# Chat section
+st.markdown("### Q&A")
 
-# Input câu hỏi
-query = st.text_input("Nhập câu hỏi của bạn:", key="query_input")
-if st.button("Gửi câu hỏi"):
+# Query input
+query = st.text_input("Enter your question:", key="query_input")
+if st.button("Send Question"):
     process_query(query)
 
 # Wrap chat history in glass-morphism container
