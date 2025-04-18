@@ -17,171 +17,146 @@ from llama_index.embeddings.gemini import GeminiEmbedding
 CHUNK_SIZE = 1024
 
 # Setup Streamlit page
+
 st.set_page_config(
-    page_title="TeenAI LP GPT",
+    page_title="Teen AI LONG PHƯỚC GPT",
     page_icon="🤖",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
 # CSS customization with modern design
+# Use Bootstrap 5 for styling
 st.markdown("""
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
 <style>
-    /* Modern Color Scheme and Fonts */
-    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
-    
-    html, body, [class*="css"] {
-        font-family: 'Space Grotesk', sans-serif;
+    body, html, [class*="css"] {
+        font-family: 'Poppins', sans-serif;
     }
-    
-    /* Animated Gradient Background */
-    .stApp {
-        background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-        background-size: 400% 400%;
-        animation: gradient 15s ease infinite;
-    }
-    
-    @keyframes gradient {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-    }
-    
-    /* Modern Header */
+
     .main-header {
-        font-size: 3.5rem;
-        background: linear-gradient(120deg, #FF4D4D, #FF8C00);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+        font-size: 3.2rem;
         font-weight: 800;
         text-align: center;
-        margin: 2rem 0;
+        margin: 2rem 0 1rem 0;
+        background: linear-gradient(90deg, #ff416c, #ff4b2b);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
         text-transform: uppercase;
         letter-spacing: 2px;
     }
-    
-    /* Glass-morphism Cards */
-    .chat-container {
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(10px);
-        border-radius: 20px;
-        padding: 2rem;
-        margin: 1rem 0;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-    
-    /* Modern Chat Bubbles */
-    .user-message {
-        background: rgba(255, 255, 255, 0.2);
-        padding: 1rem;
-        border-radius: 15px 15px 15px 0;
-        margin: 1rem 0;
-        animation: slideIn 0.3s ease;
-    }
-    
-    .ai-message {
-        background: rgba(0, 0, 0, 0.2);
-        color: white;
-        padding: 1rem;
-        border-radius: 15px 15px 0 15px;
-        margin: 1rem 0;
-        animation: slideIn 0.3s ease;
-    }
-    
-    @keyframes slideIn {
-        from { transform: translateY(20px); opacity: 0; }
-        to { transform: translateY(0); opacity: 1; }
-    }
-    
-    /* Modern Input Field */
-    .stTextInput > div > div > input {
-        background: rgba(255, 255, 255, 0.1);
-        border: 2px solid rgba(255, 255, 255, 0.2);
-        border-radius: 15px;
-        color: white;
-        font-size: 1.1rem;
-        padding: 1rem;
-    }
-    
-    /* Modern Button */
-    .stButton > button {
-        background: linear-gradient(90deg, #FF4D4D, #FF8C00);
-        border: none;
-        border-radius: 25px;
-        color: white;
+
+    .sub-header {
+        font-size: 1.3rem;
         font-weight: 600;
-        padding: 0.8rem 2rem;
-        transform: scale(1);
-        transition: all 0.3s ease;
-    }
-    
-    .stButton > button:hover {
-        transform: scale(1.05);
-        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-    }
-    
-    /* Sidebar Styling */
-    .css-1d391kg {
-        background: rgba(0, 0, 0, 0.2);
-        backdrop-filter: blur(10px);
-    }
-    
-    /* Progress Bar */
-    .stProgress > div > div > div {
-        background: linear-gradient(90deg, #FF4D4D, #FF8C00);
-    }
-    
-    /* File Uploader */
-    .stFileUploader > div {
-        background: rgba(255, 255, 255, 0.1);
-        border: 2px dashed rgba(255, 255, 255, 0.3);
-        border-radius: 15px;
-        padding: 2rem;
-    }
-    
-    /* Footer */
-    .footer {
+        color: #555;
         text-align: center;
-        padding: 2rem;
-        color: white;
-        font-size: 0.9rem;
-        background: rgba(0, 0, 0, 0.1);
-        border-radius: 15px;
-        margin-top: 3rem;
+        margin: 1rem 0;
     }
 
-    /* Input Label Styling */
-    .stTextInput > div > div > label {
-        color: white !important;
-        text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
-        font-weight: 500;
-        background: rgba(0, 0, 0, 0.2);
-        padding: 4px 8px;
-        border-radius: 4px;
-        margin-bottom: 5px;
-    }
-    
-    /* Input Field Text Color */
-    .stTextInput > div > div > input {
-        background: rgba(255, 255, 255, 0.15);
-        border: 2px solid rgba(255, 255, 255, 0.2);
+    .chat-container {
+        background-color: #f8f9fa;
         border-radius: 15px;
-        color: black !important;
-        font-size: 1.1rem;
+        padding: 2rem;
+        margin-top: 2rem;
+        border: 1px solid #dee2e6;
+    }
+
+    .user-message, .ai-message {
+        border-radius: 20px;
         padding: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .user-message {
+        background-color: #e9ecef;
+        font-weight: 500;
+        border-left: 5px solid #ff4b2b;
+    }
+
+    .ai-message {
+        background-color: #fff3cd;
+        color: #856404;
+        border-left: 5px solid #ffc107;
+    }
+
+    .footer {
+        text-align: center;
+        padding: 1.5rem;
+        font-size: 0.9rem;
+        background-color: #f1f1f1;
+        border-radius: 30px;
+        margin-top: 3rem;
+        color: #555;
+    }
+
+    .stTextInput > div > div > input {
+        background-color: #fff !important;
+        color: #212529 !important;
+        border-radius: 0.5rem !important;
+        padding: 0.6rem 0.75rem !important;
+        border: 1px solid #ced4da !important;
+    }
+
+    .stButton > button {
+        border-radius: 70px;
+        background: linear-gradient(90deg, #ff416c, #ff4b2b);
+        color: white;
+        font-weight: bold;
+        padding: 10px 25px;
+        border: none;
+        transition: 0.3s ease;
+    }
+
+    .stButton > button:hover {
+        background: linear-gradient(90deg, #e03e5e, #e04e2c);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        transform: scale(1.02);
+    }
+
+    .stFileUploader > div {
+        background: #f8f9fa;
+        padding: 1rem;
+        border-radius: 30px;
+        border: 2px dashed #dee2e6;
+    }
+
+    .stProgress > div > div {
+        background-color: #ff4b2b !important;
+    }
+
+    .stSpinner {
+        color: #ff4b2b !important;
     }
     
-    .stTextInput > div > div > input::placeholder {
-        color: rgba(255, 255, 255, 0.7);
-    }
-    
-    /* Sidebar Text Color */
-    .css-1d391kg .stTextInput > div > div > label {
-        color: white !important;
-        background: rgba(0, 0, 0, 0.3);
-    }
+    .header-banner {
+    width: 100%;
+    height: 380px;  /* Tăng chiều cao phù hợp với tỷ lệ 1200x675 */
+    background: url('https://images.unsplash.com/photo-1603791440384-56cd371ee9a7') no-repeat center center;
+    background-size: cover;
+    border-radius: 20px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 2rem;
+    font-weight: 700;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+
+background: url('https://cdn.sforum.vn/sforum/wp-content/uploads/2023/07/hinh-nen-ai-57.jpg') center center;
+}
+
 </style>
+
 """, unsafe_allow_html=True)
+
 
 # Initialize session state
 def init_session_state():
@@ -334,8 +309,10 @@ with st.sidebar:
         st.success("Chat history cleared!")
 
 # Main application section
-st.markdown("<div class='main-header'>Longphước GPT</div>", unsafe_allow_html=True)
-st.markdown("<div class='sub-header'>Smart Assistant for Scientific Research</div>", unsafe_allow_html=True)
+# Main application section
+st.markdown("<div class='header-banner'>🤖 Welcome to Teen AI LONG PHƯỚC Platform</div>", unsafe_allow_html=True)
+st.markdown("<div class='sub-header text-center text-white'>Smart Assistant for Scientific Research</div>", unsafe_allow_html=True)
+
 
 # Display status
 if st.session_state.documents is not None:
@@ -354,16 +331,16 @@ if st.button("Send Question"):
 # Wrap chat history in glass-morphism container
 if st.session_state.chat_history:
     st.markdown("<div class='chat-container'>", unsafe_allow_html=True)
-    for i, chat in enumerate(reversed(st.session_state.chat_history)):
+    for chat in reversed(st.session_state.chat_history):
         st.markdown(f"<div class='user-message'><strong>You:</strong><br>{chat['question']}</div>", unsafe_allow_html=True)
         st.markdown(f"<div class='ai-message'><strong>TeenAI:</strong><br>{chat['answer']}</div>", unsafe_allow_html=True)
     st.markdown("</div>", unsafe_allow_html=True)
 
+
 # Update footer
 st.markdown("""
 <div class='footer'>
-    <p> LongPhước GPT - Powered by Advanced AI Technology</p>
+    <p>Long Phước GPT - Powered by Advanced AI Technology</p>
     <p>Created with ❤️ by Teen Developer Team</p>
 </div>
 """, unsafe_allow_html=True)
-
