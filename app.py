@@ -25,137 +25,18 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# CSS customization with modern design
-# Use Bootstrap 5 for styling
+# Load external CSS
+def load_css(css_file):
+    with open(css_file) as f:
+        st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+
+# Load Bootstrap and custom CSS
 st.markdown("""
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
-<style>
-    body, html, [class*="css"] {
-        font-family: 'Poppins', sans-serif;
-    }
-
-    .main-header {
-        font-size: 3.2rem;
-        font-weight: 800;
-        text-align: center;
-        margin: 2rem 0 1rem 0;
-        background: linear-gradient(90deg, #ff416c, #ff4b2b);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-    }
-
-    .sub-header {
-        font-size: 1.3rem;
-        font-weight: 600;
-        color: #555;
-        text-align: center;
-        margin: 1rem 0;
-    }
-
-    .chat-container {
-        background-color: #f8f9fa;
-        border-radius: 15px;
-        padding: 2rem;
-        margin-top: 2rem;
-        border: 1px solid #dee2e6;
-    }
-
-    .user-message, .ai-message {
-        border-radius: 20px;
-        padding: 1rem;
-        margin-bottom: 1rem;
-    }
-
-    .user-message {
-        background-color: #e9ecef;
-        font-weight: 500;
-        border-left: 5px solid #ff4b2b;
-    }
-
-    .ai-message {
-        background-color: #fff3cd;
-        color: #856404;
-        border-left: 5px solid #ffc107;
-    }
-
-    .footer {
-        text-align: center;
-        padding: 1.5rem;
-        font-size: 0.9rem;
-        background-color: #f1f1f1;
-        border-radius: 30px;
-        margin-top: 3rem;
-        color: #555;
-    }
-
-    .stTextInput > div > div > input {
-        background-color: #fff !important;
-        color: #212529 !important;
-        border-radius: 0.5rem !important;
-        padding: 0.6rem 0.75rem !important;
-        border: 1px solid #ced4da !important;
-    }
-
-    .stButton > button {
-        border-radius: 70px;
-        background: linear-gradient(90deg, #ff416c, #ff4b2b);
-        color: white;
-        font-weight: bold;
-        padding: 10px 25px;
-        border: none;
-        transition: 0.3s ease;
-    }
-
-    .stButton > button:hover {
-        background: linear-gradient(90deg, #e03e5e, #e04e2c);
-        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        transform: scale(1.02);
-    }
-
-    .stFileUploader > div {
-        background: #f8f9fa;
-        padding: 1rem;
-        border-radius: 30px;
-        border: 2px dashed #dee2e6;
-    }
-
-    .stProgress > div > div {
-        background-color: #ff4b2b !important;
-    }
-
-    .stSpinner {
-        color: #ff4b2b !important;
-    }
-    
-    .header-banner {
-    width: 100%;
-    height: 380px;  /* Tăng chiều cao phù hợp với tỷ lệ 1200x675 */
-    background: url('https://images.unsplash.com/photo-1603791440384-56cd371ee9a7') no-repeat center center;
-    background-size: cover;
-    border-radius: 20px;
-    margin-top: 20px;
-    margin-bottom: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 2rem;
-    font-weight: 700;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
-
-background: url('https://cdn.sforum.vn/sforum/wp-content/uploads/2023/07/hinh-nen-ai-57.jpg') center center;
-}
-
-</style>
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 """, unsafe_allow_html=True)
+
+load_css('Giaodien.css')
 
 
 # Initialize session state
