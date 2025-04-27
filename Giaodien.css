@@ -1,237 +1,96 @@
-@charset "UTF-8";
-@import url('https://fonts.googleapis.com/css2?family=Söhne:wght@400;500;600&display=swap');
-
-/* Cập nhật màu cơ bản cho độ tương phản tốt hơn */
+/* === General Layout === */
 body {
-    background-color: #1a1b26 !important;  /* Nền tối hơn */
-    color: #ffffff !important;  /* Chữ màu trắng tinh */
-    font-family: 'Söhne', -apple-system, system-ui, sans-serif;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f4f6f9;
+    color: #333;
 }
 
-/* Tùy chỉnh thanh bên */
-.stSidebar {
-    background-color: #16171f !important;
-    border: none !important;
+/* === Sidebar === */
+.css-1d391kg {
+    background-color: #2e3a59;
+    color: white;
+}
+.css-1d391kg h1, .css-1d391kg h2, .css-1d391kg h3 {
+    color: white;
+}
+.css-1d391kg input, .css-1d391kg textarea {
+    background-color: #f0f4f8;
+    color: #000;
 }
 
-/* Khung chat */
-.chat-container {
-    max-width: 800px !important;
-    margin: 0 auto;
-    padding-bottom: 120px !important;  /* Tăng padding bottom để tránh bị che bởi input */
-}
-
-.message-container {
-    border-bottom: 1px solid rgba(255,255,255,.1);
-}
-
-/* Cải thiện kiểu dáng tin nhắn */
-.user-message, .ai-message {
-    padding: 1.5rem;
-    display: flex;
-    gap: 1.5rem;
-    margin: 0;
-}
-
-.user-message {
-    background-color: hsl(240, 24%, 93%) !important;
-}
-
-.ai-message {
-    background-color: lab(98.27% 0.01 -0.01) !important;
-}
-
-.avatar {
-    width: 30px;
-    height: 30px;
-    border-radius: 3px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.message-content {
-    font-size: 1.1rem !important;
-    line-height: 1.6;
-    padding-right: 100px;
-    color: #ffffff !important;
-    text-shadow: 0 0 1px rgba(0,0,0,0.3);  /* Tăng khả năng đọc của văn bản */
-}
-
-/* Tùy chỉnh vùng nhập liệu */
-.input-container {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
+/* === Header Banner === */
+.header-banner {
+    font-size: 32px;
+    font-weight: bold;
     padding: 1rem;
-    background-color: #1a1b26 !important;
-    border-top: 1px solid rgba(255,255,255,.1);
-    z-index: 1000;
-}
-
-.query-input {
-    max-width: 800px !important;
-    margin: 0 auto;
-    background-color: rgb(64, 65, 79) !important;
-    border: 1px solid rgba(255,255,255,.1) !important;
-    border-radius: 6px !important;
-    padding: 12px !important;
-    color: #ffffff !important;  /* Màu chữ trắng cho input */
-    font-size: 1rem !important;
-}
-
-/* Kiểu dáng cho input của Streamlit */
-.stTextInput > div > div > input {
-    width: 100% !important;
-    max-width: 800px !important;
-    margin: 0 auto !important;
-    background-color: #2d2e3a !important;
-    color: #ffffff !important;
-    border: 1px solid rgba(255,255,255,.1) !important;
-    border-radius: 6px !important;
-    font-size: 1.1rem !important;
-    padding: 12px !important;
-}
-
-/* Điều chỉnh container */
-.stContainer {
-    max-width: none !important;
-    padding: 0 !important;
-}
-
-/* Hiển thị và tạo kiểu cho tiêu đề */
-.header-banner, .sub-header {
-    display: block !important;
+    background: linear-gradient(90deg, #3f87a6, #ebf8e1, #f69d3c);
+    color: #1e1e1e;
+    border-radius: 10px;
     text-align: center;
-    padding: 1rem;
     margin-bottom: 1rem;
 }
 
-/* Cải thiện kiểu dáng tiêu đề */
-.header-banner {
-    font-size: 2rem !important;
-    font-weight: 600;
-    color: #7aa2f7 !important;  /* Xanh dương sáng cho tiêu đề */
-    text-shadow: 0 0 2px rgba(0,0,0,0.5);
-}
-
+/* === Sub Header === */
 .sub-header {
-    font-size: 1.3rem !important;
-    color: #9ece6a !important;  /* Xanh lá nhạt cho tiêu đề phụ */
+    font-size: 18px;
+    font-weight: 600;
+    margin-top: 1rem;
+    color: #4f6d7a;
 }
-
-/* Ẩn thương hiệu Streamlit */
-#MainMenu, footer {
-    visibility: hidden;
-}
-
-/* Ẩn các phần tử Streamlit */
-.stDeployButton, .stToolbar, .stStatusWidget {
-    display: none !important;
-}
-
-/* Hiệu ứng động */
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-.fade-in {
-    animation: fadeIn 0.3s ease;
-}
-
-/* Nâng cao hiển thị tải tệp */
-.stFileUploader {
-    background-color: #2d2e3a !important;
-    padding: 1rem !important;
-    border-radius: 8px !important;
-    border: 2px dashed #7aa2f7 !important;
-}
-
-.stFileUploader > div {
-    color: #ffffff !important;
-}
-
-/* Kiểu dáng thông báo trạng thái */
-.stAlert {
-    background-color: rgb(68, 70, 84) !important;
-    color: #ffffff !important;
-    border: 1px solid rgba(255,255,255,0.1) !important;
-}
-
-/* Cải thiện thông báo trạng thái */
-.stSuccess {
-    background-color: rgba(158, 206, 106, 0.2) !important;  /* Xanh lá nhạt */
-    color: #9ece6a !important;
-}
-
-.stInfo {
-    background-color: rgba(122, 162, 247, 0.2) !important;  /* Xanh dương nhạt */
-    color: #ffffff !important;
-    border-color: rgba(122, 162, 247, 0.4) !important;
-}
-
-.stInfo div {
-    color: #ffffff !important;
-    font-weight: 500 !important;
-    text-shadow: 0 0 1px rgba(0,0,0,0.3);
-}
-
-.stInfo p {
-    color: #ffffff !important;
-}
-
-.stWarning {
-    background-color: rgba(255, 158, 100, 0.2) !important;  /* Cam nhạt */
-    color: #ff9e64 !important;
-}
-
-.stError {
-    background-color: rgba(247, 118, 142, 0.2) !important;  /* Đỏ nhạt */
-    color: #f7768e !important;
-}
-
-/* Kiểu dáng thanh tiến trình */
-.stProgress > div > div {
-    background-color: rgb(68, 70, 84) !important;
-}
-
-.stProgress .st-bo {
-    background-color: #00ff00 !important;
-}
-
-/* Kiểu dáng biểu tượng quay */
-.stSpinner {
-    color: #ffffff !important;
-}
-
-/* Đảm bảo hiển thị văn bản */
-.text-white {
-    color: #ffffff !important;
-}
-
 .text-center {
-    text-align: center !important;
+    text-align: center;
+}
+.text-white {
+    color: white !important;
 }
 
-/* Ghi đè màu văn bản mặc định của Streamlit */
-.stMarkdown, .stText {
-    color: #ffffff !important;
+/* === Chat Container === */
+.chat-container {
+    padding: 1rem;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
 }
 
-/* Kiểu dáng nút bấm */
-.stButton > button {
-    background-color: #7aa2f7 !important;
-    color: #ffffff !important;
-    font-weight: bold !important;
-    border: none !important;
-    padding: 0.5rem 1rem !important;
-    border-radius: 6px !important;
+/* === Message Styles === */
+.message-container {
+    margin-bottom: 20px;
+}
+.user-message, .ai-message {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 10px;
+}
+.user-message .avatar, .ai-message .avatar {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+    font-size: 24px;
+}
+.message-content {
+    background-color: #f1f3f4;
+    padding: 10px 15px;
+    border-radius: 10px;
+    max-width: 80%;
+}
+.ai-message .message-content {
+    background-color: #e0f7fa;
 }
 
-.stButton > button:hover {
-    background-color: #5d86e4 !important;
-    transform: translateY(-1px);
-    transition: all 0.2s ease;
+/* === Input Container === */
+.input-container {
+    margin-top: 20px;
+    background-color: #fff;
+    padding: 1rem;
+    border-top: 1px solid #ccc;
+    border-radius: 10px;
+}
+
+/* === Animations === */
+.fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+}
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
 }
