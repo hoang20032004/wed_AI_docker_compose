@@ -1,20 +1,20 @@
 @charset "UTF-8";
 @import url('https://fonts.googleapis.com/css2?family=Söhne:wght@400;500;600&display=swap');
 
-/* Update base colors for better contrast */
+/* Cập nhật màu cơ bản cho độ tương phản tốt hơn */
 body {
-    background-color: #1a1b26 !important;  /* Darker background */
-    color: #ffffff !important;  /* Pure white text */
+    background-color: #1a1b26 !important;  /* Nền tối hơn */
+    color: #ffffff !important;  /* Chữ màu trắng tinh */
     font-family: 'Söhne', -apple-system, system-ui, sans-serif;
 }
 
-/* Sidebar styling update */
+/* Tùy chỉnh thanh bên */
 .stSidebar {
     background-color: #16171f !important;
     border: none !important;
 }
 
-/* Chat container */
+/* Khung chat */
 .chat-container {
     max-width: 800px !important;
     margin: 0 auto;
@@ -25,7 +25,7 @@ body {
     border-bottom: 1px solid rgba(255,255,255,.1);
 }
 
-/* Message styling improvements */
+/* Cải thiện kiểu dáng tin nhắn */
 .user-message, .ai-message {
     padding: 1.5rem;
     display: flex;
@@ -55,10 +55,10 @@ body {
     line-height: 1.6;
     padding-right: 100px;
     color: #ffffff !important;
-    text-shadow: 0 0 1px rgba(0,0,0,0.3);  /* Better text readability */
+    text-shadow: 0 0 1px rgba(0,0,0,0.3);  /* Tăng khả năng đọc của văn bản */
 }
 
-/* Input styling enhancement */
+/* Tùy chỉnh vùng nhập liệu */
 .input-container {
     position: fixed;
     bottom: 0;
@@ -81,7 +81,7 @@ body {
     font-size: 1rem !important;
 }
 
-/* Style cho Streamlit input */
+/* Kiểu dáng cho input của Streamlit */
 .stTextInput > div > div > input {
     width: 100% !important;
     max-width: 800px !important;
@@ -94,13 +94,13 @@ body {
     padding: 12px !important;
 }
 
-/* Container adjustments */
+/* Điều chỉnh container */
 .stContainer {
     max-width: none !important;
     padding: 0 !important;
 }
 
-/* Show and style headers */
+/* Hiển thị và tạo kiểu cho tiêu đề */
 .header-banner, .sub-header {
     display: block !important;
     text-align: center;
@@ -108,30 +108,30 @@ body {
     margin-bottom: 1rem;
 }
 
-/* Headers styling improvement */
+/* Cải thiện kiểu dáng tiêu đề */
 .header-banner {
     font-size: 2rem !important;
     font-weight: 600;
-    color: #7aa2f7 !important;  /* Bright blue for headers */
+    color: #7aa2f7 !important;  /* Xanh dương sáng cho tiêu đề */
     text-shadow: 0 0 2px rgba(0,0,0,0.5);
 }
 
 .sub-header {
     font-size: 1.3rem !important;
-    color: #9ece6a !important;  /* Light green for sub-headers */
+    color: #9ece6a !important;  /* Xanh lá nhạt cho tiêu đề phụ */
 }
 
-/* Hide streamlit branding */
+/* Ẩn thương hiệu Streamlit */
 #MainMenu, footer {
     visibility: hidden;
 }
 
-/* Hide Streamlit elements */
+/* Ẩn các phần tử Streamlit */
 .stDeployButton, .stToolbar, .stStatusWidget {
     display: none !important;
 }
 
-/* Animations */
+/* Hiệu ứng động */
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
@@ -141,7 +141,7 @@ body {
     animation: fadeIn 0.3s ease;
 }
 
-/* File uploader enhancement */
+/* Nâng cao hiển thị tải tệp */
 .stFileUploader {
     background-color: #2d2e3a !important;
     padding: 1rem !important;
@@ -153,21 +153,21 @@ body {
     color: #ffffff !important;
 }
 
-/* Status message styling */
+/* Kiểu dáng thông báo trạng thái */
 .stAlert {
     background-color: rgb(68, 70, 84) !important;
     color: #ffffff !important;
     border: 1px solid rgba(255,255,255,0.1) !important;
 }
 
-/* Status messages enhancement */
+/* Cải thiện thông báo trạng thái */
 .stSuccess {
-    background-color: rgba(158, 206, 106, 0.2) !important;  /* Light green */
+    background-color: rgba(158, 206, 106, 0.2) !important;  /* Xanh lá nhạt */
     color: #9ece6a !important;
 }
 
 .stInfo {
-    background-color: rgba(122, 162, 247, 0.2) !important;
+    background-color: rgba(122, 162, 247, 0.2) !important;  /* Xanh dương nhạt */
     color: #ffffff !important;
     border-color: rgba(122, 162, 247, 0.4) !important;
 }
@@ -183,16 +183,16 @@ body {
 }
 
 .stWarning {
-    background-color: rgba(255, 158, 100, 0.2) !important;  /* Light orange */
+    background-color: rgba(255, 158, 100, 0.2) !important;  /* Cam nhạt */
     color: #ff9e64 !important;
 }
 
 .stError {
-    background-color: rgba(247, 118, 142, 0.2) !important;  /* Light red */
+    background-color: rgba(247, 118, 142, 0.2) !important;  /* Đỏ nhạt */
     color: #f7768e !important;
 }
 
-/* Progress bar styling */
+/* Kiểu dáng thanh tiến trình */
 .stProgress > div > div {
     background-color: rgb(68, 70, 84) !important;
 }
@@ -201,12 +201,12 @@ body {
     background-color: #00ff00 !important;
 }
 
-/* Spinner styling */
+/* Kiểu dáng biểu tượng quay */
 .stSpinner {
     color: #ffffff !important;
 }
 
-/* Ensure text visibility */
+/* Đảm bảo hiển thị văn bản */
 .text-white {
     color: #ffffff !important;
 }
@@ -215,12 +215,12 @@ body {
     text-align: center !important;
 }
 
-/* Override any Streamlit default text colors */
+/* Ghi đè màu văn bản mặc định của Streamlit */
 .stMarkdown, .stText {
     color: #ffffff !important;
 }
 
-/* Button styling */
+/* Kiểu dáng nút bấm */
 .stButton > button {
     background-color: #7aa2f7 !important;
     color: #ffffff !important;
